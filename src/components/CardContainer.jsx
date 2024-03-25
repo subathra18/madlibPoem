@@ -8,11 +8,10 @@ import Poem from "./Poem";
 
 const INITIAL_BUTTON_TEXT = "NEXT";
 
-const CardContainer = () => {
+const CardContainer = ({ onSubmit }) => {
   const [buttonText, setButtonText] = useState(INITIAL_BUTTON_TEXT);
   const [questionIndex, setQuestionIndex] = useState(0);
   const [answer, setAnswer] = useState([]);
-  const [showPoem, setShowPoem] = useState(false);
   const [isInitialQuestionSetOver, setIsInitialQuestionSetOver] =
     useState(false);
   const dispatch = useDispatch();
@@ -30,33 +29,20 @@ const CardContainer = () => {
   };
 
   const submitAnswers = (ans) => {
-    console.log("on sbmit", [...answer, ans]);
-    // dispatch({
-    //   type: "generateMadlib",
-    //   payload: {
-    //     answers: [...answer, ans],
-    //     questionnaireID: currentQuestionnaire.madlibId,
-    //   },
-    // });
     dispatch(
       generateMadlib({
         answers: [...answer, ans],
         questionnaireID: currentQuestionnaire.madlibId,
       })
     );
-    setShowPoem(true);
+    onSubmit(true);
   };
 
   const fetchNextSetOfQuestions = (ans) => {
-    // dispatch({
-    //   type: "fetchNextQuestionnaire",
-    //   payload: { answer: [...answer, ans] },
-    // });
     dispatch(fetchNextQuestionnaire({ answer: [...answer, ans] }));
   };
 
   const getButtonText = () => {
-    // return buttonText;
     return isInitialQuestionSetOver && questionIndex == questionObj.length - 1
       ? "SUBMIT"
       : buttonText;
@@ -81,9 +67,7 @@ const CardContainer = () => {
     }
   };
 
-  return showPoem ? (
-    <Poem></Poem>
-  ) : (
+  return (
     <Card
       questionObj={questionObj[questionIndex]}
       buttonText={getButtonText()}

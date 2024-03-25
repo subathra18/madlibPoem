@@ -12,9 +12,9 @@ const Card = ({ questionObj, handleButtonClick, buttonText }) => {
     setAnswer("");
   };
   return (
-    <div className="w-85 text-cl-text flex-row justify-content-center">
+    <div className="w-9/12 text-cl-text flex flex-col justify-center items-center text-center">
       <p className="text-3xl font-medium">{question}</p>
-      <div className="text-2xl py-6">
+      <div className="text-2xl my-4">
         {type == "input" ? (
           <Input
             placeholder="pen here"
@@ -34,7 +34,11 @@ const Card = ({ questionObj, handleButtonClick, buttonText }) => {
           ""
         )}
       </div>
-      <button onClick={OnButtonClick} className="text-white btn bg-cl-button">
+
+      <button
+        onClick={OnButtonClick}
+        className="btn  text-white  bg-cl-button hover:bg-cl-border"
+      >
         {buttonText}
       </button>
     </div>
